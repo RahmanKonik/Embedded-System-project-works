@@ -15,8 +15,8 @@
 const int rs = 37, en = 36, d4 = 35, d5 = 34, d6 = 33, d7 = 32; 
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
-const int pulseCountPin = 8;// signal pin
-const int buttonPin = 2;
+const int pulseCountPin = 2;// signal pin
+const int buttonPin = 7;
 const int ANALOG_PIN = A2;
 
 volatile boolean buttonPressedA = false;
@@ -104,7 +104,7 @@ void setup() {
     pinMode(ANALOG_PIN, INPUT);
     pinMode(buttonPin, INPUT);
     
-    // singal pin = 8
+    // singal pin = 7
     
     attachInterrupt(digitalPinToInterrupt(pulseCountPin), pulse_isr, RISING);  
  
@@ -120,7 +120,7 @@ void setup() {
 void loop(){
 
   char key = keypad.getKey();
-
+  Serial.println(pulseCount);
   if (key == '1'){
 
     buttonPressedA = true;
@@ -431,8 +431,8 @@ void pulse_isr() {
 void timerInter() {
 
   time++;
-  if (time > 19) { // Perform wind speed calculation every 5 seconds
-    frequency = pulseCount / 10; // Multiply pulse count by 2 to get frequency in Hz
+  if (time > 9) { // Perform wind speed calculation every 5 seconds
+    frequency = pulseCount / 1; // Multiply pulse count by 2 to get frequency in Hz
     pulseCount = 0; // Reset pulse count
     windSpeed = - 0.24 + frequency * 0.699; 
     time = 0; // counter reset time
